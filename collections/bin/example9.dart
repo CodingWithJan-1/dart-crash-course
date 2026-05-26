@@ -1,31 +1,31 @@
+// unmodifiable list view
 import 'package:collection/collection.dart';
 
 void main(List<String> args) {
-  // even tho the list is final the value itself is still mutsable
-
-  final personInfo = Person(
-    name: 'Jan',
-    siblings: [Person(name: 'jezter')],
+  final personFriends = Person(
+    name: "Jan 3rd",
+    friends: [Person(name: 'Chad Entero')],
   );
 
-  personInfo._siblings?.add(Person(name: 'jezter'));
-
   try {
-    personInfo.siblings?.add(Person(name: "impostor"));
+    personFriends.friends?.add(Person(name: 'someOthers'));
   } catch (e) {
     print(e);
+  }
+
+  for (final friend in personFriends._friends!) {
+    if (friend.name.isNotEmpty) {
+      print(friend.name);
+    }
   }
 }
 
 class Person {
   final String name;
-  final List<Person>? _siblings;
-  //   final int age;
+  final List<Person>? _friends;
 
-  // creates read only list view
-  UnmodifiableListView<Person>? get siblings =>
-      _siblings == null ? null : UnmodifiableListView(_siblings);
+  Person({required this.name, List<Person>? friends}) : _friends = friends;
 
-  const Person({required this.name, List<Person>? siblings})
-    : _siblings = siblings;
+  UnmodifiableListView<Person>? get friends =>
+      _friends == null ? null : UnmodifiableListView(_friends);
 }
